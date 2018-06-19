@@ -1,0 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Ubuntu, sans-serif;
+}
+
+html, body {
+    overflow-x: hidden;
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin: 36px;
+}
+
+.header-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.contents {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.content-container {
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding: 5%;
+    margin: 5%;
+}
+
+/* Notes */
+.notes {
+    background-color: #DB5A6B;
+}
+
+.note {
+    width: 100%;
+    font-size: 12px;
+    color: white;
+    font-weight: 600;
+    white-space: pre-line;
+}
+
+.snippet {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin: 16px 0;
+}
+
+.snippet > * {
+    margin: 8px 0;
+}
+
+.snippet-header {
+    color: white;
+}
+
+.snippet-demo {
+    padding: 16px;
+    color: rgb(15, 8, 22);
+    background-color: blanchedalmond;
+    font-size: 12px;
+    width: 100%;
+}
+
+/* Demos */
+
