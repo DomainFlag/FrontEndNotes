@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: "Brandon Grotesque Light", sans-serif;
+}
+
+#root {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    height: 100%;
+}
+
+.sub_container {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 70%;
+    margin: 32px;
+}
+
+.sub_container_content {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 32px;
+}
+
+.pre_processing {
+    background-color: #DB5A6B;
+}
+
+.note {
+    margin: 8px 0;
+    font-weight: 600;
+    color: white;
+}
+
+.snippets {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: auto;
+    flex-flow: row;
+}
+
+pre {
+    font-weight: 400;
+    color: white;
+}
+
+.post_processing {}
+
+.label {
+    font-size: 36px;
+}
+
+.commentSystem {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.child_comment {
+    margin-left: 48px;
+}
+
+.header {
+    margin: 8px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.headerAvatar {
+    margin-right: 4px;
+    width: 25px;
+    height: auto;
+}
+
+.headerDate {
+    margin-left: 4px;
+    font-size: 14px;
+}
+
+.content {
+    margin: 4px 25px;
+}
+
+.contentText {
+    font-size: 16px;
+}
