@@ -8,18 +8,6 @@ const CONVERSION = {
     }
 };
 
-function objToStr(obj) {
-    let str = "{\n";
-    for(let key in obj) {
-        if(obj.hasOwnProperty(key)) {
-            str += key + " : " + obj[key];
-        }
-    }
-    str += "\n}";
-
-    return str;
-}
-
 const SNIPPET = "SNIPPET";
 const NOTE = "NOTE";
 
@@ -50,6 +38,10 @@ const ACTIONS = {
     CHANGE_PRICE : () => ({
         type : "CHANGE_PRICE", productName : "Mango", productPrice : 6.25
     })
+};
+
+const REDUCER = {
+
 };
 
 let NotesContainer = {
@@ -85,8 +77,8 @@ let NotesContainer = {
         type : SNIPPET,
         value : {
             "header" : "Grocery App' state - basic model that does not do anything to the view but defines its content",
-            "demo" : JSON.stringify(Grocery, null, "\t")
-        }
+            "demo" : objToStr(Grocery)
+}
     }, {
         id: 6,
         type : NOTE,
@@ -96,8 +88,9 @@ let NotesContainer = {
     }, {
         id: 7,
         type : NOTE,
-        value : "An action is a plain JavaScript object that describes what should happen to the current state of" +
-        " our App(Store). It can be any meaningful action that can be useful to our store either to add a new fruit" +
+        value : "An action is a plain JavaScript object that describes what should happen and" +
+        " how a specific change  will happen to the current state of our App(Store). It can be" +
+        " any meaningful action that can be useful to our store either to add a new fruit" +
         " or delete one or even change its prices."
     }, {
         id : 8,
@@ -107,6 +100,22 @@ let NotesContainer = {
             " expressed into a JS object that describes the type of change we are expecting and the actual change to" +
             " the state object.",
             "demo" : objToStr(ACTIONS)
+        }
+    }, {
+        id : 9,
+        type : NOTE,
+        value : "An action only describes what should happen and what will happen to" +
+            " the application's state, but it doesn't handle any change by itself. That's why" +
+            " reducers come to play that will specify how the application's state changes in" +
+            " response to actions sent to the store."
+    }, {
+        id : 9,
+        type : SNIPPET,
+        value : {
+            "header" : "It’s just a function that takes state and action as arguments, and" +
+            " returns the next state as a new instance deferenced from initial state of the app" +
+            " with the specific action being carried out.",
+            "demo" : objToStr(REDUCER)
         }
     }]
 };

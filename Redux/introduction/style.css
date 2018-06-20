@@ -84,6 +84,7 @@ html, body {
 }
 
 .snippet-demo {
+    border-radius: 6px;
     padding: 16px;
     color: rgb(15, 8, 22);
     background-color: blanchedalmond;
