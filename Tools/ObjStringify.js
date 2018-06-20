@@ -9,6 +9,7 @@ function spaceTab(depth, tabSize = 4) {
     return str;
 }
 
+//Needs improvement
 let objToStr = (obj, depth = 1) => {
     let counter = 0;
 
@@ -17,6 +18,8 @@ let objToStr = (obj, depth = 1) => {
         if (obj instanceof Array) {
             tag.openingTag = "[";
             tag.closingTag = "]";
+        } else if(obj instanceof Function) {
+            return obj.toString();
         } else {
             tag.openingTag = "{";
             tag.closingTag = "}";

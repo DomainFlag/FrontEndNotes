@@ -1,2 +1,22 @@
 .git
 .idea
+
+# dependencies
+/Practice/node_modules
+
+# testing
+/Practice/coverage
+
+# production
+/Practice/build
+
+# misc
+/Practice.DS_Store
+./Practiceenv.local
+/Practice.env.development.local
+/Practice.env.test.local
+/Practice.env.production.local
+
+/Practice/npm-debug.log*
+/Practice/yarn-debug.log*
+/Practice/yarn-error.log*

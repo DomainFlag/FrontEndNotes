@@ -13,10 +13,12 @@ const NOTE = "NOTE";
 
 const Grocery = {
     name : "Vegan Store",
-    availableCurrencies : [
-        DOLLAR, MDL
-    ],
-    usedCurrency : DOLLAR,
+    currency : {
+        availableCurrencies : [
+            DOLLAR, MDL
+        ],
+        usedCurrency : DOLLAR
+    },
     products : [
         {
             "productName" : "Mango",
@@ -37,11 +39,69 @@ const ACTIONS = {
     }),
     CHANGE_PRICE : () => ({
         type : "CHANGE_PRICE", productName : "Mango", productPrice : 6.25
+    }),
+    CHANGE_NAME : () => ({
+        type : "CHANGE_NAME", name : "Fruit Store"
+    }),
+    CHANGE_CURRENCY : () => ({
+        type : "CHANGE_CURRENCY", usedCurrency : "MDL"
+    }),
+    CHANGE_AVAILABLE_CURRENCIES : () => ({
+        type : "CHANGE_AVAILABLE_CURRENCIES", availableCurrencies : ["€", "£"]
     })
 };
 
-const REDUCER = {
+const REDUCERS = {
+    ADD_PRODUCT : (state, action) => {
+        let newState = Object.assign({}, state);
+        newState.products = newState.products.concat([{ productName : action.productName, productPrice : action.productPrice }]);
 
+        return newState;
+    },
+    CHANGE_PRICE : (state, action) => {
+        let newState = Object.assign({}, state);
+
+        newState.products = newState.products.map((product) => {
+            if(product.productName === action.productName) {
+                return { productName : action.productName, productPrice : action.productPrice };
+            } else return product;
+        });
+
+        return newState;
+    },
+    CHANGE_NAME : (state, action) => {
+        return action.name;
+    },
+    CHANGE_CURRENCY : (state, action) => {
+        let newState = Object.assign({}, state);
+
+        if(newState.availableCurrencies.indexOf(newState.usedCurrency) !== -1)
+            newState.usedCurrency = action.usedCurrency;
+
+        return newState;
+    },
+    CHANGE_AVAILABLE_CURRENCIES : (state, action) => {
+        let newState = Object.assign({}, state);
+
+        action.availableCurrencies.forEach((currency) => {
+            if(newState.availableCurrencies.indexOf(currency) !== -1)
+                newState.availableCurrencies = newState.availableCurrencies.concat(currency);
+        });
+
+        return newState;
+    },
+};
+
+const GROCERY_REDUCER = (state, action) => {
+    if(REDUCERS.hasOwnProperty(action.type)) {
+        let newState = Object.assign({}, state);
+
+        newState.name = REDUCERS[action.type](state.name, action);
+        newState.currency = REDUCERS[action.type](state.currency, action);
+        newState.products = REDUCERS[action.type](state.products, action);
+
+        return newState;
+    } else return state;
 };
 
 let NotesContainer = {
@@ -112,13 +172,47 @@ let NotesContainer = {
         id : 9,
         type : SNIPPET,
         value : {
-            "header" : "It’s just a function that takes state and action as arguments, and" +
-            " returns the next state as a new instance deferenced from initial state of the app" +
-            " with the specific action being carried out.",
-            "demo" : objToStr(REDUCER)
+            "header" : "It’s just a function that takes state and action as arguments, and returns the next state as" +
+            " a new instance deferenced from initial state of the app with the specific action being carried out and" +
+            " respecting all the principles of Immutability of the corresponding object.",
+            "demo" : [
+                objToStr(REDUCERS)
+            ]
+        }
+    }, {
+        id : 10,
+        type : NOTE,
+        value : "Immutability required by Redux employs shallow equality checking for reference changes by enabling" +
+        " data being handled safer and know  if any connected React components are to be updated correctly. Shallow " +
+        "equality checking (or reference equality) simply checks if two different variables reference the same object, " +
+        "thus the component doesn't need to be updated or otherwise it would. If the reducer returns a new object, the " +
+        "shallow equality check will fail, and combineReducers will set a hasChanged flag to true. You cannot mutate an " +
+        "immutable object; instead, you must mutate a copy of it, leaving the original intact. \n" +
+        "Note: shallow copying via Object.assign() only copies the top-level of the object, so nested objects aren’t" +
+        " copied thus we need to handle it too. For deep cloning, we need to use other alternatives because" +
+        " Object.assign() copies property values. If the source value is a reference to an object like Array or" +
+        " Object,  it only copies that reference value, but it's not the case for the immutable objects like" +
+        " primitives  that state cannot be changed like String, Numbers, Booleans, null, undefined."
+    }, {
+        id : 9,
+        type : SNIPPET,
+        value : {
+            "header" : "And we write another reducer that manages the complete state of our app by calling all our" +
+            " reducers for the corresponding state keys",
+            "demo" : [
+                objToStr(GROCERY_REDUCER)
+            ]
         }
     }]
 };
+
+const RandomString = "Single source of truth - App's state is stored only once within a single store, single handedly" +
+    " the next state of the view and makes easier.\n" +
+    "\n" +
+    "State is read-only - The only way to changes its state through the intent of emitting an action.\n" +
+    "\n" +
+    "Changes are made with pure functions - Thus the state won't be changed internally and a new changed instance" +
+    " will be given back with desired changes. ";
 
 const View = {
     SNIPPET : (note) => {
@@ -127,9 +221,17 @@ const View = {
                 {note.value.header}
             </div>
             <div className="snippet-demo">
-                <pre>
-                    {note.value.demo}
-                </pre>
+                {
+                    note.value.demo instanceof Array ?
+                    note.value.demo.map((demo) =>
+                        <pre>
+                            {demo}
+                        </pre>
+                    ) :
+                        <pre>
+                            {note.value.demo}
+                        </pre>
+                }
             </div>
         </div>;
     },
