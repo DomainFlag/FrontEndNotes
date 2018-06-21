@@ -1,10 +1,17 @@
 const DOLLAR = "$";
 const MDL = "MDL";
 
-const CONVERSION = {
-    default : DOLLAR,
-    other : {
-        MDL : 16.78
+const REDUCER_ACTIONS = {
+    ADD_PRODUCT : (state, action) => {
+        return state.concat([{ productName : action.productName, productPrice : action.productPrice }]);
+    },
+    UPDATE_PRICE : (state, action) => {
+        return state.map((product) => {
+            return product.productName === action.productName ? {
+                productName : action.productName,
+                productPrice : action.productPrice
+            } : product;
+        });
     }
 };
 
@@ -12,7 +19,7 @@ const SNIPPET = "SNIPPET";
 const NOTE = "NOTE";
 
 const Grocery = {
-    name : "Vegan Store",
+    groceryName : "Vegan Store",
     currency : {
         availableCurrencies : [
             DOLLAR, MDL
@@ -34,75 +41,136 @@ const Grocery = {
 };
 
 const ACTIONS = {
-    ADD_PRODUCT : () => ({
-        type : "ADD_PRODUCT", productName : "Orange", productPrice : 3.56
+    ADD_PRODUCT : (productName, productPrice) => ({
+        type : "ADD_PRODUCT", productName, productPrice
     }),
-    CHANGE_PRICE : () => ({
-        type : "CHANGE_PRICE", productName : "Mango", productPrice : 6.25
+    CHANGE_PRICE : (productName, productPrice) => ({
+        type : "CHANGE_PRICE", productName, productPrice
     }),
-    CHANGE_NAME : () => ({
-        type : "CHANGE_NAME", name : "Fruit Store"
+    CHANGE_NAME : (groceryName) => ({
+        type : "CHANGE_NAME", groceryName
     }),
-    CHANGE_CURRENCY : () => ({
-        type : "CHANGE_CURRENCY", usedCurrency : "MDL"
+    CHANGE_CURRENCY : (usedCurrency) => ({
+        type : "CHANGE_CURRENCY", usedCurrency
     }),
-    CHANGE_AVAILABLE_CURRENCIES : () => ({
-        type : "CHANGE_AVAILABLE_CURRENCIES", availableCurrencies : ["€", "£"]
+    CHANGE_AVAILABLE_CURRENCIES : (availableCurrencies) => ({
+        type : "CHANGE_AVAILABLE_CURRENCIES", availableCurrencies
     })
 };
 
-const REDUCERS = {
-    ADD_PRODUCT : (state, action) => {
-        let newState = Object.assign({}, state);
-        newState.products = newState.products.concat([{ productName : action.productName, productPrice : action.productPrice }]);
-
-        return newState;
-    },
-    CHANGE_PRICE : (state, action) => {
-        let newState = Object.assign({}, state);
-
-        newState.products = newState.products.map((product) => {
-            if(product.productName === action.productName) {
-                return { productName : action.productName, productPrice : action.productPrice };
-            } else return product;
-        });
-
-        return newState;
-    },
-    CHANGE_NAME : (state, action) => {
-        return action.name;
-    },
-    CHANGE_CURRENCY : (state, action) => {
-        let newState = Object.assign({}, state);
-
-        if(newState.availableCurrencies.indexOf(newState.usedCurrency) !== -1)
-            newState.usedCurrency = action.usedCurrency;
-
-        return newState;
-    },
-    CHANGE_AVAILABLE_CURRENCIES : (state, action) => {
-        let newState = Object.assign({}, state);
-
-        action.availableCurrencies.forEach((currency) => {
-            if(newState.availableCurrencies.indexOf(currency) !== -1)
-                newState.availableCurrencies = newState.availableCurrencies.concat(currency);
-        });
-
-        return newState;
-    },
+const REDUCER_VALIDATOR = (reducerActions, state, action) => {
+    if(reducerActions.hasOwnProperty(action.type))
+        return reducerActions[action.type](state, action);
+    else return state;
 };
 
-const GROCERY_REDUCER = (state, action) => {
-    if(REDUCERS.hasOwnProperty(action.type)) {
+const groceryName = (() => {
+    const REDUCER_ACTIONS = {
+        CHANGE_NAME : (state, action) => {
+            return action.groceryName;
+        }
+    };
+
+    return (state = [], action) => REDUCER_VALIDATOR(REDUCER_ACTIONS, state, action);
+})();
+
+const products = (() => {
+    const REDUCER_ACTIONS = {
+        ADD_PRODUCT : (state, action) => {
+            return state.concat([{ productName : action.productName, productPrice : action.productPrice }]);
+        },
+        UPDATE_PRICE : (state, action) => {
+            return state.map((product) => {
+                return product.productName === action.productName ? {
+                    productName : action.productName,
+                    productPrice : action.productPrice
+                } : product;
+            });
+        }
+    };
+
+    return (state = [], action) => REDUCER_VALIDATOR(REDUCER_ACTIONS, state, action);
+})();
+
+const currency = (() => {
+    const REDUCER_ACTIONS = {
+        CHANGE_CURRENCY : (state, action) => {
+            if(action.availableCurrencies.indexOf(state) !== -1)
+                return action.usedCurrency;
+
+            return state;
+        },
+        CHANGE_AVAILABLE_CURRENCIES : (state, action) => {
+            let newState = Object.assign({}, state);
+
+            action.availableCurrencies.forEach((currency) => {
+                if(newState.availableCurrencies.indexOf(currency) !== -1)
+                    newState.availableCurrencies = newState.availableCurrencies.concat(currency);
+            });
+
+            return newState;
+        }
+    };
+
+    return (state = {}, action) => REDUCER_VALIDATOR(REDUCER_ACTIONS, state, action);
+})();
+
+const COMBINE_REDUCER = (obj) => {
+    return (state, action) => {
         let newState = Object.assign({}, state);
 
-        newState.name = REDUCERS[action.type](state.name, action);
-        newState.currency = REDUCERS[action.type](state.currency, action);
-        newState.products = REDUCERS[action.type](state.products, action);
+        Object.keys(obj)
+            .map(key => {
+                newState[key] = obj[key](state[key], action);
+            });
 
-        return newState;
-    } else return state;
+        for(let key in newState) {
+            if(newState.hasOwnProperty(key) && state.hasOwnProperty(key)) {
+                if(newState[key] !== state[key]) {
+                    console.log(newState[key]);
+                    return {...state, ...newState};
+                }
+            }
+        }
+
+        console.log("same object");
+        return state;
+    };
 };
+
+const ROOT_REDUCER = COMBINE_REDUCER({
+    groceryName,
+    currency,
+    products
+});
+
+const createStore = (reducer, state) => {
+    class Store {
+        constructor(reducer, state) {
+            this.state = state || undefined;
+            this.reducer = reducer;
+        }
+
+        dispatch(action) {
+            this.state = this.reducer(state, action);
+        }
+
+        getState() {
+            return this.state;
+        }
+    }
+
+    return new Store(reducer, state);
+};
+
+let groceryStore = createStore(ROOT_REDUCER, Grocery);
+let oldState = groceryStore.getState();
+groceryStore.dispatch(() => ({
+    type: "UNKOWN ACTION"
+}));
+let newState = groceryStore.getState();
+console.log(newState);
+console.log(oldState === newState);
 
 let NotesContainer = {
     "title" : "Introduction",
@@ -169,50 +237,51 @@ let NotesContainer = {
             " reducers come to play that will specify how the application's state changes in" +
             " response to actions sent to the store."
     }, {
-        id : 9,
+        id : 10,
         type : SNIPPET,
         value : {
             "header" : "It’s just a function that takes state and action as arguments, and returns the next state as" +
             " a new instance deferenced from initial state of the app with the specific action being carried out and" +
             " respecting all the principles of Immutability of the corresponding object.",
             "demo" : [
-                objToStr(REDUCERS)
+                objToStr(REDUCER_ACTIONS)
             ]
         }
     }, {
-        id : 10,
+        id : 11,
         type : NOTE,
         value : "Immutability required by Redux employs shallow equality checking for reference changes by enabling" +
         " data being handled safer and know  if any connected React components are to be updated correctly. Shallow " +
         "equality checking (or reference equality) simply checks if two different variables reference the same object, " +
         "thus the component doesn't need to be updated or otherwise it would. If the reducer returns a new object, the " +
         "shallow equality check will fail, and combineReducers will set a hasChanged flag to true. You cannot mutate an " +
-        "immutable object; instead, you must mutate a copy of it, leaving the original intact. \n" +
+        "immutable object; instead, you must mutate a copy of it, leaving the original intact." + "\n" +
         "Note: shallow copying via Object.assign() only copies the top-level of the object, so nested objects aren’t" +
         " copied thus we need to handle it too. For deep cloning, we need to use other alternatives because" +
         " Object.assign() copies property values. If the source value is a reference to an object like Array or" +
         " Object,  it only copies that reference value, but it's not the case for the immutable objects like" +
         " primitives  that state cannot be changed like String, Numbers, Booleans, null, undefined."
     }, {
-        id : 9,
+        id : 12,
         type : SNIPPET,
         value : {
             "header" : "And we write another reducer that manages the complete state of our app by calling all our" +
             " reducers for the corresponding state keys",
             "demo" : [
-                objToStr(GROCERY_REDUCER)
+                objToStr(ROOT_REDUCER)
             ]
         }
+    }, {
+        id : 13,
+        type : NOTE,
+        value : "Note that our App' store will be our single source of truth - App's state is stored only once within" +
+        " a single store, single handedly becoming us the next state of the view and makes it easier doing so.\n" +
+        " Note that our state will be only read-only - The only way to changes its state through the intent of" +
+        " emitting an action.\n" +
+        " Changes are made with pure functions - Thus the state won't be changed internally and a new changed" +
+        " instance will be given back with desired changes."
     }]
 };
-
-const RandomString = "Single source of truth - App's state is stored only once within a single store, single handedly" +
-    " the next state of the view and makes easier.\n" +
-    "\n" +
-    "State is read-only - The only way to changes its state through the intent of emitting an action.\n" +
-    "\n" +
-    "Changes are made with pure functions - Thus the state won't be changed internally and a new changed instance" +
-    " will be given back with desired changes. ";
 
 const View = {
     SNIPPET : (note) => {
@@ -261,6 +330,7 @@ class NotesManager extends React.Component {
 ReactDOM.render(
     <div className="container">
         <div className="header">
+            <img className="header-img" src="./assets/settings.svg"/>
             <p className="header-title">
                 {NotesContainer.title}
             </p>

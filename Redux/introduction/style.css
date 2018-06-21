@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: Ubuntu, sans-serif;
+    font-family: "Ubuntu", sans-serif;
 }
 
 html, body {
@@ -20,13 +20,33 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
     margin: 36px;
 }
 
+.header > * {
+    margin: 16px 0;
+}
+
 .header-title {
-    font-size: 18px;
+    font-family: "Monospaced", monospace;
+    font-size: 24px;
     font-weight: 600;
+}
+
+.header-img {
+    width: 28px;
+    height: auto;
+    animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .contents {
@@ -50,11 +70,12 @@ html, body {
     align-items: center;
     flex-direction: column;
     padding: 5%;
-    margin: 5%;
+    margin: 0 5%;
 }
 
 /* Notes */
 .notes {
+    border-radius: 6px;
     background-color: #DB5A6B;
 }
 

@@ -37,36 +37,40 @@ const Grocery = {
 
 const ACTIONS = {
     ADD_PRODUCT : (productName, productPrice) => ({
-        type : "ADD_PRODUCT", productName : productName, productPrice : productPrice
+        type : "ADD_PRODUCT", productName, productPrice
     }),
-    UPDATE_PRICE : (productName, productPrice) => ({
-        type : "UPDATE_PRICE", productName : productName, productPrice : productPrice
+    CHANGE_PRICE : (productName, productPrice) => ({
+        type : "CHANGE_PRICE", productName, productPrice
     }),
-    CHANGE_NAME : () => ({
-        type : "CHANGE_NAME", name : "Fruit Store"
+    CHANGE_NAME : (name) => ({
+        type : "CHANGE_NAME", name
     }),
     CHANGE_CURRENCY : (usedCurrency, availableCurrencies) => ({
-        type : "CHANGE_CURRENCY", usedCurrency : usedCurrency, availableCurrencies : availableCurrencies
+        type : "CHANGE_CURRENCY", usedCurrency, availableCurrencies
     }),
     CHANGE_AVAILABLE_CURRENCIES : (availableCurrencies) => ({
-        type : "CHANGE_AVAILABLE_CURRENCIES", availableCurrencies : availableCurrencies
+        type : "CHANGE_AVAILABLE_CURRENCIES", availableCurrencies
     })
 };
 
-const name = (state = "", action) => {
-    const HELPER_ACTIONS = {
+const REDUCER_VALIDATOR = (reducerActions, state, action) => {
+    if(reducerActions.hasOwnProperty(action.type))
+        return reducerActions[action.type](state, action);
+    else return state;
+};
+
+const name = (() => {
+    const REDUCER_ACTIONS = {
         CHANGE_NAME : (state, action) => {
             return action.name;
         }
     };
 
-    if(HELPER_ACTIONS.hasOwnProperty(action.type))
-        return HELPER_ACTIONS[action.type](state, action);
-    else return state;
-};
+    return (state = "", action) => REDUCER_VALIDATOR(REDUCER_ACTIONS, state, action);
+})();
 
-const products = (state = [], action) => {
-    const HELPER_ACTIONS = {
+const products = (() => {
+    const REDUCER_ACTIONS = {
         ADD_PRODUCT : (state, action) => {
             return state.concat([{ productName : action.productName, productPrice : action.productPrice }]);
         },
@@ -80,13 +84,11 @@ const products = (state = [], action) => {
         }
     };
 
-    if(HELPER_ACTIONS.hasOwnProperty(action.type))
-        return HELPER_ACTIONS[action.type](state, action);
-    else return state;
-};
+    return (state = [], action) => REDUCER_VALIDATOR(REDUCER_ACTIONS, state, action);
+})();
 
-const currency = (state = "", action) => {
-    const HELPER_ACTIONS = {
+const currency = (() => {
+    const REDUCER_ACTIONS = {
         CHANGE_CURRENCY : (state, action) => {
             if(action.availableCurrencies.indexOf(state) !== -1)
                 return action.usedCurrency;
@@ -105,10 +107,8 @@ const currency = (state = "", action) => {
         }
     };
 
-    if(HELPER_ACTIONS.hasOwnProperty(action.type))
-        return HELPER_ACTIONS[action.type](state, action);
-    else return state;
-};
+    return (state = {}, action) => REDUCER_VALIDATOR(REDUCER_ACTIONS, state, action);
+})();
 
 let rootReducer = combineReducers({
     name,
@@ -122,6 +122,7 @@ let rootReducer = combineReducers({
 let groceryStore = createStore(rootReducer, Grocery);
 
 console.log(groceryStore.getState());
+groceryStore.dispatch(ACTIONS.CHANGE_CURRENCY("MDL", groceryStore.getState().currency.availableCurrencies));
 groceryStore.dispatch(ACTIONS.CHANGE_CURRENCY("MDL", groceryStore.getState().currency.availableCurrencies));
 console.log(groceryStore.getState());
 

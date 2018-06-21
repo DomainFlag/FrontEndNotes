@@ -1,6 +1,8 @@
 .git
 .idea
 
+node_modules/
+
 # dependencies
 /Practice/node_modules
 
