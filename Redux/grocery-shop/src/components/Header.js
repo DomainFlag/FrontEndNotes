@@ -1,12 +1,15 @@
 import React from "react"
-import GroceryName from "./../containers/GroceryName"
-import Currency from "../containers/GroceryCurrency"
+import GroceryName from "./GroceryName"
+import GroceryCurrency from "./GroceryCurrency"
 
-const Header = ({ groceryName }) => {
-    return <div>
+import GroceryImage from "./../assets/groceries.svg"
+
+const Header = () => (
+    <div className="header">
+        <img src={GroceryImage} className="grocery-image"/>
         <GroceryName/>
-        <Currency/>
+        <GroceryCurrency/>
     </div>
-};
+);
 
 export default Header;

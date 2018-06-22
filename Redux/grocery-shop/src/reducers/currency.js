@@ -1,10 +1,24 @@
 import REDUCER_VALIDATOR from "./reducer"
 
+const ACTIONS = {
+    CHANGE_CURRENCY : (usedCurrency) => ({
+        type : "CHANGE_CURRENCY", usedCurrency
+    }),
+    CHANGE_AVAILABLE_CURRENCIES : (availableCurrencies) => ({
+        type : "CHANGE_AVAILABLE_CURRENCIES", availableCurrencies
+    })
+};
+
 const currency = (() => {
     const REDUCER_ACTIONS = {
         CHANGE_CURRENCY : (state, action) => {
-            if(action.availableCurrencies.indexOf(state) !== -1)
-                return action.usedCurrency;
+            let newState = Object.assign({}, state);
+
+            if(state.availableCurrencies.some((currCurrency) => currCurrency.currency === action.usedCurrency))
+                return {
+                    ...newState,
+                    usedCurrency: action.usedCurrency
+                };
 
             return state;
         },
@@ -12,8 +26,8 @@ const currency = (() => {
             let newState = Object.assign({}, state);
 
             action.availableCurrencies.forEach((currency) => {
-                if(newState.availableCurrencies.indexOf(currency) !== -1)
-                    newState.availableCurrencies = newState.availableCurrencies.concat(currency);
+                if(state.availableCurrencies.some((currCurrency) => currCurrency.currency === currency))
+                    state.availableCurrencies = state.availableCurrencies.concat(currency);
             });
 
             return newState;
@@ -23,4 +37,7 @@ const currency = (() => {
     return (state = {}, action) => REDUCER_VALIDATOR(REDUCER_ACTIONS, state, action);
 })();
 
-export default currency;
+export {
+    ACTIONS,
+    currency
+};

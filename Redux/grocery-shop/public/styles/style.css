@@ -1,0 +1,211 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.app {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    margin: 8px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.grocery-name {
+    font-size: 36px;
+    font-weight: 600;
+    color: #852B40;
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+.grocery-image {
+    width: 84px;
+    height: auto;
+}
+
+.currencies {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.currencies > * {
+    margin: 0 4px;
+}
+
+.availableCurrenciesLabel {
+    font-size: 14px;
+}
+
+.availableCurrencies {
+    border: 1px solid #852B40;
+    font-size: 14px;
+}
+
+.availableCurrency {
+    background-color: #852B40;
+    color: white;
+    font-size: 14px;
+    border: none;
+}
+
+.currency-modifier {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.currency-modifier > * {
+    margin: 0 4px;
+}
+
+.content-adder {
+    width: 18px;
+    height: auto;
+}
+
+.form-input {
+    border: none;
+    border-bottom: 2px solid #DB5A6B;
+    height: 32px;
+    width: 125px;
+    line-height: 18px;
+    font-size: 14px;
+    padding: 0 6px;
+}
+
+.form-submit {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 0 8px;
+    box-shadow: 1px 1px 6px 2px rgba(133, 43, 64, 0.2);
+    border: none;
+    background-color: #852B40;
+    height: 32px;
+    border-radius: 6px;
+    color: white;
+}
+
+.cart-manage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.cart-manage > * {
+    margin: 0 8px;
+}
+
+.content-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.content-form-pop {
+    animation: pop 0.25s linear forwards;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Divider */
+.divider {
+    margin: 16px 0;
+    background-color: gainsboro;
+    width: 100%;
+    height: 1px;
+}
+
+/* Grocery List */
+.grocery-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin: 8px 0;
+}
+
+.product {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.product > * {
+    margin: 0 4px;
+}
+
+.productName {
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+.productPrice {
+    font-size: 12px;
+    font-weight: 600;
+    color: #852B40;
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+.product-adder {
+    margin: 8px 0;
+    height: 24px !important;
+    width: auto !important;
+}
+
+.product-adder:hover {
+    animation: flip 0.15s linear forwards;
+}
+
+@keyframes flip {
+    0% {
+        transform: skew(0deg, 0deg) scale(1.25);
+    }
+    25% {
+        transform: skew(8deg, 0deg) scale(1.25);
+    }
+    75% {
+        transform: skew(0deg, -8deg) scale(1.25);
+    }
+    100% {
+        transform: skew(0deg, 0deg) scale(1.25);
+    }
+}
+

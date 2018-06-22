@@ -9,12 +9,19 @@ const DOLLAR = "$";
 const MDL = "MDL";
 
 const Grocery = {
-    groceryName : "Vegan Store",
+    groceryName : "Grocery Store",
     currency : {
         availableCurrencies : [
-            DOLLAR, MDL
+            {
+                currency: DOLLAR,
+                quotation: 1.0
+            }, {
+                currency : MDL,
+                quotation: 16.92
+            }
         ],
-        usedCurrency : DOLLAR
+        usedCurrency : DOLLAR,
+        referenceCurrency : DOLLAR
     },
     products : [
         {
@@ -30,7 +37,9 @@ const Grocery = {
     ]
 };
 
-render(<Provider store={createStore(grocery, Grocery)}>
-    <App/>
-</Provider>,
-document.getElementById("root"));
+render(
+    <Provider store={createStore(grocery, Grocery)}>
+        <App/>
+    </Provider>,
+    document.getElementById("root")
+);

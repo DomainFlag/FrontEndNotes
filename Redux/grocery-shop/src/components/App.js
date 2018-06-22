@@ -3,10 +3,11 @@ import Header from "./Header"
 import GroceryList from "./GroceryList"
 
 const App = () => (
-    <div>
+    <section className="app">
         <Header/>
+        <div className="divider"/>
         <GroceryList/>
-    </div>
+    </section>
 );
 
 export default App;

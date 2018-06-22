@@ -1,7 +1,14 @@
 import React from "react"
+import {connect} from "react-redux"
 
-const GroceryName = ({ groceryName }) => (
-    <p>{groceryName}</p>
+export const GroceryName = ({ groceryName }) => (
+    <p className="grocery-name">{groceryName}</p>
 );
 
-export default GroceryName;
+const mapStateToProps = (state) => {
+    return {
+        "groceryName" : state.groceryName
+    }
+};
+
+export default connect(mapStateToProps)(GroceryName)
