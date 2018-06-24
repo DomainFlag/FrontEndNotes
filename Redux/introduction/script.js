@@ -311,8 +311,6 @@ const View = {
     }
 };
 
-
-
 class NotesManager extends React.Component {
     constructor(props) {
         super(props);
