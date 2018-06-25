@@ -1,4 +1,4 @@
-import REDUCER_VALIDATOR from "./reducer"
+import REDUCER_VALIDATOR from "../../../blizzard-api/src/reducers/reducer"
 
 const ACTIONS = {
     ADD_PRODUCT : (productName, productPrice) => ({
