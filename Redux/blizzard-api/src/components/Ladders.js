@@ -1,20 +1,23 @@
 import React from "react"
 import {Component} from "react"
 import {connect} from "react-redux"
+import "./Ladders.sass"
 
 export class Ladders extends Component {
     constructor(props) {
         super(props);
+
+        console.log(this.props.ladders);
     }
 
     render = () => (
         <div className="ladders">
             {
-                this.props.ladders.map((ladder) => (
-                    <div className="ladder">
+                this.props.ladders.map((ladder, index1) => (
+                    <div key={index1} className="ladder">
                         {
-                            ladder.ladder.map((ladd) => (
-                                <div className="ladder-extra">
+                            ladder.ladder.map((ladd, index2) => (
+                                <div key={index2} className="ladder-extra">
                                     <div className="row">
                                         <p className="ladder-ladderName">{ladd.ladderName}</p>
                                         <p className="ladder-division">{ladd.division}</p>
@@ -41,7 +44,7 @@ export class Ladders extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    ladders: state.currentSeason
+    ladders: state.ladders.currentSeason
 });
 
-export default connect(mapStateToProps, null)(Ladders);
+export default connect(mapStateToProps)(Ladders);

@@ -1,0 +1,66 @@
+@import "./reusable-components"
+
+.user
+  @extend %flexbox-centered
+  width: 100%
+  justify-content: flex-start
+  flex-direction: column
+
+.container
+  @extend %flexbox-centered
+  align-items: flex-start
+  width: 50%
+  flex-direction: column
+
+.profile, .stats
+  @extend %flexbox-centered
+  width: 100%
+  justify-content: flex-start
+  flex-direction: row
+
+.profile-stats
+  @extend %flexbox-centered
+  margin: 0 16px
+  flex: 1
+  align-items: flex-start
+  flex-direction: column
+
+.user-name, stats
+  @extend %flexbox-centered
+  flex: 1
+  align-items: flex-start
+  flex-direction: row
+
+.user-name
+  font-size: 24px
+  font-weight: 600
+
+.stats
+  justify-content: space-between
+
+.stats > *
+  margin: 16px 0
+
+.state
+  @extend %flexbox-centered
+  align-items: flex-start
+  flex-direction: column
+
+.stat-label
+  color: $primaryColorDark
+
+.user-portrait
+  width: 100px
+  height: 100px
+
+.primaryRace
+  font-size: 16px
+
+.accent
+  font-weight: 600
+
+.wins
+  @extend %flexbox-centered
+
+.race-wins
+  margin: 0 16px

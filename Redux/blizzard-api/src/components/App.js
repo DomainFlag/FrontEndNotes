@@ -1,12 +1,13 @@
 import React from "react"
 import Header from "./Header"
-import Components from "./Components"
+import Content from "./Content"
 import Footer from "./Footer"
+import "./App.sass"
 
 const App = () => (
-    <div>
+    <div id="app">
         <Header/>
-        <Components/>
+        <Content/>
         <Footer/>
     </div>
 );

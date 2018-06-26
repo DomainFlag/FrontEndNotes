@@ -1,0 +1,58 @@
+@import reusable-components
+
+.form
+  @extend %flexbox-centered
+  width: 100%
+  align-items: flex-start
+  flex-direction: column
+
+.form
+  *
+    margin: 4px 0
+
+.form-container
+  @extend %flexbox-centered
+  flex-direction: row
+
+.form-input
+  margin: 0 32px
+
+  &:first-of-type, &:last-of-type
+    margin: 0
+
+.form-input-text
+  color: $primaryColor
+  font-size: 16px
+  font-weight: 600
+
+.form-input-value
+  border: 2px solid rgba($accentColor, 0.5)
+  padding: 0 5%
+  border-radius: 4px
+  color: $IconsTextColor
+  height: 40px
+  width: 185px
+
+.form-action
+  @extend %flexbox-centered
+  flex-direction: row
+
+.form-submit
+  border: none
+  border-radius: 6px
+  height: 40px
+  padding: 0 12px
+  color: white
+  font-weight: 600
+  background-color: $accentColor
+
+.form-update
+  @extend %flexbox-centered
+  margin: 0 16px
+
+  *
+    margin: 0 4px
+
+.form-update-submit
+  border: none
+  background-color: $accentColor

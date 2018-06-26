@@ -1,8 +1,11 @@
 import React from "react"
+import "./Footer.sass"
 
 const Footer = () => (
-    <div>
-        Just a footer
+    <div className="footer">
+        <p className="footer-text">
+            © 2018 Cristian Chivriga. All rights reserved.
+        </p>
     </div>
 );
 

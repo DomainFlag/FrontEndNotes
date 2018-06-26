@@ -2,6 +2,7 @@ import React from "react"
 import {Component} from "react"
 import {connect} from "react-redux"
 import {ACTIONS} from "../reducers/user"
+import "./Form.sass"
 
 const Username = "Username:";
 const Region = "Region:";
@@ -13,26 +14,33 @@ export class Form extends Component {
     }
 
     onSubmit = () => {
-        console.log(this.props);
         this.props.onSubmit("DomainFlag", 1, "3898655");
     };
 
     render = () => (
         <div className="form">
-            <p className="form-label">Account:</p>
-            <div className="form-input-label">
-                <p className="form-input-text">{Username}</p>
-                <input className="form-input" placeholder={Username}/>
+            <p className="subdivider">Account</p>
+            <div className="form-container">
+                <div className="form-input">
+                    <p className="form-input-text">{Username}</p>
+                    <input className="form-input-value" placeholder={Username}/>
+                </div>
+                <div className="form-input">
+                    <p className="form-input-text">{Region}</p>
+                    <input className="form-input-value" placeholder={Region}/>
+                </div>
+                <div className="form-input">
+                    <p className="form-input-text">{AccountID}</p>
+                    <input className="form-input-value" placeholder={AccountID}/>
+                </div>
             </div>
-            <div className="form-input-label">
-                <p className="form-input-text">{Region}</p>
-                <input className="form-input" placeholder={Region}/>
+            <div className="form-action">
+                <button className="form-submit" onClick={this.onSubmit}>FETCH</button>
+                <div className="form-update">
+                    <label className="form-update-label">Keep Updated</label>
+                    <input className="form-update-submit" type="checkbox" value="Keep Updated"/>
+                </div>
             </div>
-            <div className="form-input-label">
-                <p className="form-input-text">{AccountID}</p>
-                <input className="form-input" placeholder={AccountID}/>
-            </div>
-            <button className="form-submit" onClick={this.onSubmit}>Submit</button>
         </div>
     )
 }

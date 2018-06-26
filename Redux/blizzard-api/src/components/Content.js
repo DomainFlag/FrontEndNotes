@@ -2,12 +2,14 @@ import React from "react"
 import Profile from "./Profile"
 import Ladders from "./Ladders"
 import Matches from "./Matches"
+import "./Content.sass"
 
-const Components = () => (
-    <div>
+const Content = () => (
+    <div className="content">
         <Profile/>
-        <Ladders/>
+        {/*<Ladders/>*/}
+        {/*<Matches/>*/}
     </div>
 );
 
-export default Components;
+export default Content;

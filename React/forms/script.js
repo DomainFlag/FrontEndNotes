@@ -13,7 +13,7 @@ const notes = [
     " primary location propagate to the entire system without the possibility of a duplicate" +
     " value somewhere being forgotten." + "\n",
 
-    "Controlled Components - " + "\n",
+    "Controlled Content - " + "\n",
 
     "Keys only make sense in the context of the surrounding array manipulation scope but they" +
     " must be unique among siblings, but globally not when they are referenced by lists part of" +

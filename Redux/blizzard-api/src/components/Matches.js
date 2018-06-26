@@ -1,6 +1,7 @@
 import React from "react"
 import {Component} from "react"
 import {connect} from "react-redux"
+import "./Matches.sass"
 
 export class Matches extends Component {
     constructor(props) {
@@ -10,8 +11,8 @@ export class Matches extends Component {
     render = () => (
         <div className="matches">
             {
-                this.props.matches.map((match) => (
-                    <div className="match">
+                this.props.matches.map((match, index) => (
+                    <div key={index} className="match">
                         <div className="row">
                             <p className="match-map">{match.map}</p>
                             <p className="match-type">{match.type}</p>

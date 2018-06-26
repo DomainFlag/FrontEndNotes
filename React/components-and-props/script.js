@@ -157,12 +157,12 @@ const snippets = [
 ];
 
 const notes = [
-    "Components let you split the UI into independent, reusable pieces, and think about each piece in isolation.",
-    "Components are alike to JavaScript object' constructor except they are being called differently by React seeing an element \n" +
+    "Content let you split the UI into independent, reusable pieces, and think about each piece in isolation.",
+    "Content are alike to JavaScript object' constructor except they are being called differently by React seeing an element \n" +
     "representing a user-defined component and by passing its JSX attributes to this component as a single object.\n" +
     "We call this object “props”. They accept arbitrary inputs by ultimately returning React elements describing what should appear on the screen.",
 
-    "Components can refer to other components in their output. This lets us use the same component abstraction for any level of detail. \n" +
+    "Content can refer to other components in their output. This lets us use the same component abstraction for any level of detail. \n" +
     "A button, a form, a dialog, a screen: in React apps, all those are commonly expressed as components. \n" +
     "Don’t be afraid to split components into smaller components for better reusability.",
 
