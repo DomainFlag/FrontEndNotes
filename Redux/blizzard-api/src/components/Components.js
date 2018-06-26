@@ -1,9 +1,12 @@
 import React from "react"
-import User from "./User"
+import Profile from "./Profile"
+import Ladders from "./Ladders"
+import Matches from "./Matches"
 
 const Components = () => (
     <div>
-        <User/>
+        <Profile/>
+        <Ladders/>
     </div>
 );
 

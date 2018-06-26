@@ -2,7 +2,7 @@ import React from "react"
 import Form from "./Form"
 import {connect} from "react-redux"
 
-const User = ({user}) => (
+const Profile = ({user}) => (
     <div className="user">
         <div className="profile">
             <img src="#" className="user-portrait"/>
@@ -26,4 +26,4 @@ const mapStateToProps = (state) => ({
     user : state.user
 });
 
-export default connect(mapStateToProps)(User);
+export default connect(mapStateToProps)(Profile);
