@@ -1,4 +1,4 @@
-@import reusable-components
+@import ../reusable-components
 
 .form
   @extend %flexbox-centered
@@ -32,6 +32,9 @@
   color: $IconsTextColor
   height: 40px
   width: 185px
+  &:focus
+    outline: none
+    border: 2px solid rgba($primaryColorDark, 0.25)
 
 .form-action
   @extend %flexbox-centered
@@ -56,3 +59,29 @@
 .form-update-submit
   border: none
   background-color: $accentColor
+
+.form-update-label
+  color: $accentColor
+  font-weight: 600
+
+.form-update-checkbox
+  @extend %flexbox-centered
+  border: 2px solid rgba($accentColor, 0.6)
+  background-color: rgba(white, 0.6)
+  width: 25px
+  height: 25px
+  border-radius: 6px
+
+.checkbox-toggled
+    border: 2px solid $accentColor
+    background-color: white
+
+.form-update-checkbox-done
+  visibility: hidden
+  width: 15px
+  height: 15px
+
+.checkbox-done-toggled
+  visibility: visible
+  transition: width 2s
+

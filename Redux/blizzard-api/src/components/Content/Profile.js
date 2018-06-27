@@ -66,7 +66,7 @@ const Profile = ({user}) => {
                             {
                                 Object.keys(content["wins"]).map((key, index) => (
                                     <p key={index} className="race-wins">
-                                        {key + ": " + content["wins"][key]}
+                                        {labelParser(key) + ": " + content["wins"][key]}
                                     </p>
                                 ))
                             }

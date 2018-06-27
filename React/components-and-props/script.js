@@ -1,4 +1,4 @@
-const noteClassName = "note";
+const noteClassName = "introduction";
 
 let comments = [
     {

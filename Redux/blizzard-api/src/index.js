@@ -7,17 +7,17 @@ import App from "./components/App"
 const SCHEME = "https";
 const AUTHORITY = "eu.api.battle.net";
 const PATH = "/sc2/user";
-const ID = "3898655";
+const ID = "3899655";
 const REGION = "1";
-const NAME = "DomainFlag";
+const NAME = "UserName";
 const MATCHES = "matches";
 const LOCALE = "en_GB";
-const KEY = "99j885s2ucwsqwac5af3fqd5nur68fqt";
+const KEY = "API&KEY";
 
 const BlizzardProfile = {
     "title" : "Blizzard API",
     "user" : {
-        "displayName" : "DomainFlag",
+        "displayName" : "Dude1",
         "portrait": {
             "x": 0,
             "y": 0,
@@ -55,12 +55,12 @@ const BlizzardProfile = {
             {
                 "ladder": [],
                 "characters": [{
-                    "id": 3898655,
+                    "id": 3898455,
                     "realm": 1,
-                    "displayName": "DomainFlag",
+                    "displayName": "Dude1",
                     "clanName": "",
                     "clanTag": "",
-                    "profilePath": "/profile/3898655/1/DomainFlag/"
+                    "profilePath": "/profile/3898455/1/Dude1/"
                 }],
                 "nonRanked": []
             }, {
@@ -76,19 +76,19 @@ const BlizzardProfile = {
                     "showcase": true
                 }],
                 "characters": [{
-                    "id": 3898655,
+                    "id": 3898455,
                     "realm": 1,
-                    "displayName": "DomainFlag",
+                    "displayName": "Dude1",
                     "clanName": "",
                     "clanTag": "",
-                    "profilePath": "/profile/3898655/1/DomainFlag/"
+                    "profilePath": "/profile/3898455/1/Dude1/"
                 }, {
-                    "id": 4829939,
+                    "id": 4828939,
                     "realm": 1,
-                    "displayName": "Amonicus",
+                    "displayName": "Dude2",
                     "clanName": "",
                     "clanTag": "",
-                    "profilePath": "/profile/4829939/1/Amonicus/"
+                    "profilePath": "/profile/4828939/1/Dude2/"
                 }],
                 "nonRanked": []
             }]

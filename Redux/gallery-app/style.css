@@ -1,0 +1,167 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Brandon Grotesque Medium", sans-serif; }
+
+html, body, #root {
+  height: 100%;
+  width: 100%; }
+
+#root {
+  background-color: white;
+  overflow: hidden; }
+
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; }
+
+/* Header */
+.header {
+  display: flex;
+  flex: 2;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 8px; }
+
+.header > * {
+  margin: 8px 0; }
+
+.header-text {
+  font-family: "Rockwell", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: #26C281; }
+
+/* App Content */
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex: 6;
+  justify-content: center;
+  align-items: center; }
+
+.container-modal {
+  height: 100%;
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin: 5% 10%; }
+
+.photo-container {
+  box-shadow: 1px 1px 6px 1px rgba(93, 140, 174, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row; }
+
+.photo {
+  height: 80px;
+  width: auto; }
+
+/* Form action */
+.form-action {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row; }
+
+.form-submit {
+  border: none;
+  border-radius: 6px;
+  height: 40px;
+  padding: 0 12px;
+  color: white;
+  font-weight: 600;
+  background-color: #6900ff; }
+
+.form-update {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  margin: 0 16px; }
+  .form-update * {
+    margin: 0 4px; }
+
+.form-update-submit {
+  border: none;
+  background-color: #6900ff; }
+
+.form-update-label {
+  color: #6900ff;
+  font-weight: 600; }
+
+.form-update-checkbox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  border: 2px solid rgba(105, 0, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.6);
+  width: 25px;
+  height: 25px;
+  border-radius: 6px; }
+
+.checkbox-toggled {
+  border: 2px solid #6900ff;
+  background-color: white; }
+
+.form-update-checkbox-done {
+  visibility: hidden;
+  width: 15px;
+  height: 15px; }
+
+.checkbox-done-toggled {
+  visibility: visible;
+  transition: width 2s; }
+
+/* Footer */
+.footer {
+  display: flex;
+  flex: 2;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column; }
+
+.footer * {
+  margin: 4px 0; }
+
+.footer-gear {
+  position: relative;
+  display: flex;
+  height: 28px; }
+
+.gear-main {
+  left: -15px;
+  top: -30px;
+  position: absolute;
+  width: 24px;
+  height: auto;
+  animation: spin 4s linear infinite reverse; }
+
+.gear-secondary {
+  left: 7.5px;
+  top: -17.5px;
+  position: absolute;
+  width: 20px;
+  height: auto;
+  animation: spin 4s linear infinite; }
+
+.gear-connector {
+  left: -5px;
+  top: -5px;
+  position: absolute;
+  width: 14px;
+  height: auto;
+  animation: spin 4s linear infinite backwards; }
+
+.footer-text {
+  font-size: 10px;
+  color: #5d8cae; }
