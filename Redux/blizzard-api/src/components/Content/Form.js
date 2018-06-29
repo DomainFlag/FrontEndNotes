@@ -1,7 +1,7 @@
 import React from "react"
 import {Component} from "react"
 import {connect} from "react-redux"
-import {ACTIONS} from "../../reducers/user"
+import {ACTIONS} from "../../reducers/profile"
 import checked from "./../../assets/checked.svg"
 import "./Form.sass"
 
@@ -14,21 +14,41 @@ export class Form extends Component {
         super(props);
 
         this.state = {
-            "checkboxToggle": null,
-            "checkboxDoneToggle" : null
+            checkboxToggle : null,
+            payload : {}
         };
     }
 
     onCheckboxToggle = () => {
         this.setState((currState) => {
             if(currState.checkboxToggle)
-                return { checkboxToggle: null, checkboxDoneToggle: null};
-            else return { checkboxToggle: "checkbox-toggled", checkboxDoneToggle: "checkbox-done-toggled"};
+                return { checkboxToggle: null};
+            else return { checkboxToggle: "checkbox-toggled" };
         });
     };
 
-    onSubmit = () => {
-        this.props.onSubmit("DomainFlag", 1, "3898655");
+    onInputChange = (target, data) => {
+        let obj = {};
+        obj[target] = data;
+        this.setState((prevState) => ({
+            payload: Object.assign({}, prevState.payload, obj)
+        }));
+    };
+
+    onUsernameChange = (e) => {
+        this.onInputChange("username", e.target.value);
+    };
+
+    onRegionChange = (e) => {
+        this.onInputChange("region", e.target.value);
+    };
+
+    onAccIDChange = (e) => {
+        this.onInputChange("id", e.target.value);
+    };
+
+    onFormSubmit = () => {
+        this.props.onSubmit(this.state.payload);
     };
 
     render = () => (
@@ -37,23 +57,27 @@ export class Form extends Component {
             <div className="form-container">
                 <div className="form-input">
                     <p className="form-input-text">{Username}</p>
-                    <input className="form-input-value" placeholder={Username}/>
+                    <input className="form-input-value" placeholder={Username} onChange={this.onUsernameChange}/>
                 </div>
                 <div className="form-input">
                     <p className="form-input-text">{Region}</p>
-                    <input className="form-input-value" placeholder={Region}/>
+                    <input className="form-input-value" placeholder={Region} onChange={this.onRegionChange}/>
                 </div>
                 <div className="form-input">
                     <p className="form-input-text">{AccountID}</p>
-                    <input className="form-input-value" placeholder={AccountID}/>
+                    <input className="form-input-value" placeholder={AccountID} onChange={this.onAccIDChange}/>
                 </div>
             </div>
             <div className="form-action">
-                <button className="form-submit" onClick={this.onSubmit}>FETCH</button>
+                <button className="form-submit" onClick={this.onFormSubmit}>FETCH</button>
                 <div className="form-update">
                     <label className="form-update-label">Keep Updated</label>
                     <div className={"form-update-checkbox " + this.state.checkboxToggle} onClick={this.onCheckboxToggle}>
-                        <img src={checked} className={"form-update-checkbox-done " + this.state.checkboxDoneToggle}/>
+                        {
+                            this.state.checkboxToggle ? (
+                                <img src={checked} className="form-update-checkbox-done" alt="#"/>
+                            ) : null
+                        }
                     </div>
                 </div>
             </div>
@@ -62,7 +86,7 @@ export class Form extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    "onSubmit" : (username, region, accountID) => dispatch(ACTIONS.UPDATE_PROFILE(username, region, accountID))
+    "onSubmit" : (payload) => dispatch(ACTIONS.FETCH_PROFILE(payload))
 });
 
 export default connect(null, mapDispatchToProps)(Form);

@@ -54,14 +54,24 @@ const ACTIONS = {
         let headers = new Headers();
         headers.append("Method", "GET");
         headers.append("Authorization", "Client-ID" +
-            " API&KEY");
+            " YOUR&API&KEY");
 
         return (dispatch) => {
             dispatch(ACTIONS.REQUEST_PHOTOS("pending", null));
 
             return fetch("https://api.unsplash.com/photos/", {headers})
-                .then((response) => response.json())
-                .then((response) => dispatch(ACTIONS.REQUEST_PHOTOS(null, response)));
+                .then((response) => {
+                    if(response.status >= 300)
+                        return Promise.reject("error");
+                    else return response.json();
+                }, () => {
+                    return Promise.reject("error");
+                }).then((response) => {
+                    dispatch(ACTIONS.REQUEST_PHOTOS(null, response))
+                }, () => {
+                    return Promise.reject("error");
+                })
+                .catch(dispatch.bind(this, ACTIONS.REQUEST_PHOTOS("error", null)));
         }
     })()
 };
@@ -131,37 +141,38 @@ class ApiContent extends React.Component {
         super(props);
 
         this.state = {
-            checkbox: {
-                checkboxToggle: null,
-                checkboxDoneToggle: null
-            }
+            checkboxToggle: null
         }
     }
 
     onSubmit = () => {
-
+        this.props.fetchPhotos();
     };
+
+    componentWillUnmount() {
+        if(this.state.checkboxToggle)
+            clearInterval(this.state.updateScheduler);
+    }
 
     onCheckboxToggle = () => {
         this.setState((prevState) => {
-           if(prevState.checkbox.checkboxToggle)
+           if(prevState.checkboxToggle) {
+               clearInterval(prevState.updateScheduler);
                return {
-                   checkbox: {
-                       checkboxToggle: null,
-                       checkboxDoneToggle: null
-                   }
+                   checkboxToggle: null,
+                   updateScheduler: null
                };
-           else return {
-               checkbox: {
-                   checkboxToggle: "checkbox-toggled",
-                   checkboxDoneToggle: "checkbox-done-toggled"
-               }
+           } else return {
+               checkboxToggle: "checkbox-toggled",
+               updateScheduler: setInterval(() => {
+                   this.props.fetchPhotos();
+               }, 15*1000)
            };
         });
     };
 
     render = () => (
-        <div className="container">
+        <div className="content">
             <div className="container-modal">
                 {
                     this.props.photos.map((photo) => (
@@ -175,8 +186,12 @@ class ApiContent extends React.Component {
                 <button className="form-submit" onClick={this.onSubmit}>FETCH</button>
                 <div className="form-update">
                     <label className="form-update-label">Keep Updated</label>
-                    <div className={"form-update-checkbox " + this.state.checkbox.checkboxToggle} onClick={this.onCheckboxToggle}>
-                        <img src="./assets/checked.svg" className={"form-update-checkbox-done " + this.state.checkbox.checkboxDoneToggle}/>
+                    <div className={"form-update-checkbox " + this.state.checkboxToggle} onClick={this.onCheckboxToggle}>
+                        {
+                            this.state.checkboxToggle ? (
+                                <img src="./assets/checked.svg" className="form-update-checkbox-done"/>
+                            ) : null
+                        }
                     </div>
                 </div>
             </div>
@@ -187,6 +202,8 @@ class ApiContent extends React.Component {
 
 const Content = ReactRedux.connect((state) => ({
     photos: state.photos.photos
+}), (dispatch) => ({
+    fetchPhotos: () => dispatch(ACTIONS.FETCH_IMAGES)
 }))(ApiContent);
 
 class Footer extends React.Component {

@@ -1,31 +1,49 @@
+/* Color Variables */
+/* Margin Variables */
 * {
   margin: 0;
   padding: 0;
   font-family: "Brandon Grotesque Medium", sans-serif; }
 
-html, body, #root {
-  height: 100%;
-  width: 100%; }
+html {
+  width: 100%;
+  height: 100%; }
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden; }
 
 #root {
-  background-color: white;
-  overflow: hidden; }
+  width: 100%;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: white; }
 
 .container {
-  height: 100%;
+  width: 100%;
   display: flex;
+  flex: 1;
   justify-content: center;
   align-items: center;
   flex-direction: column; }
 
 /* Header */
 .header {
+  width: 100%;
   display: flex;
   flex: 2;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 8px; }
+  margin: 16px; }
 
 .header > * {
   margin: 8px 0; }
@@ -37,38 +55,43 @@ html, body, #root {
   color: #26C281; }
 
 /* App Content */
-.container {
+.content {
   width: 100%;
   height: 100%;
   display: flex;
   flex: 6;
-  justify-content: center;
-  align-items: center; }
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  margin: 16px; }
 
 .container-modal {
-  height: 100%;
+  height: 85%;
+  width: 75%;
   display: flex;
   flex: 1;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin: 5% 10%; }
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; }
 
 .photo-container {
   box-shadow: 1px 1px 6px 1px rgba(93, 140, 174, 0.3);
+  margin: 16px 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row; }
 
 .photo {
-  height: 80px;
+  height: 250px;
   width: auto; }
 
 /* Form action */
 .form-action {
+  width: 100%;
+  margin: 16px 0;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-direction: row; }
 
@@ -114,21 +137,20 @@ html, body, #root {
   background-color: white; }
 
 .form-update-checkbox-done {
-  visibility: hidden;
+  user-select: none;
+  transition: width 2s;
   width: 15px;
   height: 15px; }
 
-.checkbox-done-toggled {
-  visibility: visible;
-  transition: width 2s; }
-
 /* Footer */
 .footer {
+  width: 100%;
   display: flex;
   flex: 2;
   justify-content: flex-end;
   align-items: center;
-  flex-direction: column; }
+  flex-direction: column;
+  margin: 16px; }
 
 .footer * {
   margin: 4px 0; }
@@ -165,3 +187,9 @@ html, body, #root {
 .footer-text {
   font-size: 10px;
   color: #5d8cae; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }

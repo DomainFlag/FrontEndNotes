@@ -1,4 +1,4 @@
-import REDUCER_VALIDATOR from "../../../blizzard-api/src/reducers/reducer"
+import REDUCER_VALIDATOR from "../../../blizzard-api/src/reducers/reducer-validator"
 
 const ACTIONS = {
     CHANGE_CURRENCY : (usedCurrency) => ({

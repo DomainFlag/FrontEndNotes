@@ -5,7 +5,7 @@ import "./Header.sass"
 
 const Header = ({title}) => (
     <div className="header">
-        <img src={logo} className="header-logo"/>
+        <img src={logo} className="header-logo" alt="#"/>
         <p className="header-title">
             {title}
         </p>

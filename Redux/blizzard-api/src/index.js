@@ -2,22 +2,16 @@ import React from "react"
 import {render} from "react-dom"
 import {createStore} from "redux"
 import {Provider} from "react-redux"
-import BlizzardReducer from "./reducers/BlizzardReducer"
+import {applyMiddleware} from "redux"
+import ThunkMiddleware from "redux-thunk"
+import logger from "redux-logger"
+import BlizzardReducer from "./reducers/root-reducer"
 import App from "./components/App"
-const SCHEME = "https";
-const AUTHORITY = "eu.api.battle.net";
-const PATH = "/sc2/user";
-const ID = "3899655";
-const REGION = "1";
-const NAME = "UserName";
-const MATCHES = "matches";
-const LOCALE = "en_GB";
-const KEY = "API&KEY";
 
 const BlizzardProfile = {
     "title" : "Blizzard API",
-    "user" : {
-        "displayName" : "Dude1",
+    "profile" : {
+        "displayName" : "Domain_1",
         "portrait": {
             "x": 0,
             "y": 0,
@@ -28,8 +22,8 @@ const BlizzardProfile = {
         },
         "career": {
             "primaryRace": "TERRAN",
-            "terranWins": 223,
-            "protossWins": 5,
+            "terranWins": 450,
+            "protossWins": 2,
             "zergWins": 5,
             "highest1v1Rank": "DIAMOND",
             "highestTeamRank": "GOLD",
@@ -55,12 +49,12 @@ const BlizzardProfile = {
             {
                 "ladder": [],
                 "characters": [{
-                    "id": 3898455,
+                    "id": 1898355,
                     "realm": 1,
-                    "displayName": "Dude1",
+                    "displayName": "Domain_1",
                     "clanName": "",
                     "clanTag": "",
-                    "profilePath": "/profile/3898455/1/Dude1/"
+                    "profilePath": "/profile/1898355/1/Domain_1/"
                 }],
                 "nonRanked": []
             }, {
@@ -76,28 +70,32 @@ const BlizzardProfile = {
                     "showcase": true
                 }],
                 "characters": [{
-                    "id": 3898455,
+                    "id": 1898355,
                     "realm": 1,
-                    "displayName": "Dude1",
+                    "displayName": "Domain_1",
                     "clanName": "",
                     "clanTag": "",
-                    "profilePath": "/profile/3898455/1/Dude1/"
+                    "profilePath": "/profile/1898355/1/Domain_1/"
                 }, {
-                    "id": 4828939,
+                    "id": 4828239,
                     "realm": 1,
-                    "displayName": "Dude2",
+                    "displayName": "Domain_2",
                     "clanName": "",
                     "clanTag": "",
-                    "profilePath": "/profile/4828939/1/Dude2/"
+                    "profilePath": "/profile/4828239/1/Domain_2/"
                 }],
                 "nonRanked": []
             }]
     }
 };
 
+let store = createStore(BlizzardReducer, BlizzardProfile, applyMiddleware(
+    ThunkMiddleware,
+    logger
+));
 
 render(
-    <Provider store={createStore(BlizzardReducer, BlizzardProfile)}>
+    <Provider store={store}>
         <App/>
     </Provider>,
     document.getElementById("root")
