@@ -1,9 +1,7 @@
+import React from "react"
 import {Component} from "react"
 
 class NoteHeader extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render = () => (
         <div className="header">

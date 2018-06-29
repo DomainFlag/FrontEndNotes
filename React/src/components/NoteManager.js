@@ -1,4 +1,8 @@
+import React from "react"
 import {Component} from "react"
+import NoteHeader from "./NoteHeader"
+import NoteFooter from "./NoteFooter"
+import NoteContent from "./NoteContent"
 
 class NotesManager extends Component {
     constructor(props) {

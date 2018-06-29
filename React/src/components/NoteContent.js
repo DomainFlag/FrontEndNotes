@@ -1,39 +1,36 @@
+import React from "react"
 import {Component} from "react"
 
 class NoteContent extends Component {
-    constructor(props) {
-        super(props);
-    }
+    render = () => {
 
-    render = () => (
-        <div className="container-modal">
-            {
-                this.props.type === "SNIPPET" ? (
-                    <div className="note">
-                        <div className="note-content">
-                            <div className="description">
-                                {this.props.value.header}
+        return (
+            <div className="container-modal">
+                {
+                    this.props.type === "SNIPPET" ? (
+                        <div className="note">
+                            <div className="note-content">
+                                <div className="description">
+                                    {this.props.value.snippet}
+                                </div>
                             </div>
-                        </div>
-                        <div className="divider"/>
-                        <div className="note-content">
-                            <pre className="demo">
+                            <div className="divider"/>
+                            <div className="note-content">
                                 {this.props.value.demo}
-                            </pre>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="note">
-                        <div className="note-content">
-                            <div className="description">
-                                {this.props.value}
                             </div>
                         </div>
+                    ) : (
+                        <div className="note">
+                            <div className="note-content">
+                                <div className="description">
+                                    {this.props.value}
+                                </div>
+                            </div>
+                        </div>
+                    )}
                     </div>
-                )
-            }
-        </div>
-    );
+        )
+    };
 }
 
 export default NoteContent;

@@ -1,4 +1,4 @@
-const noteClassName = "introduction";
+import React from "react"
 
 let comments = [
     {
@@ -134,74 +134,8 @@ let queryTree = () => {
     return stack.getTree();
 };
 
-const snippets = [
-    `
-    class Header extends React.Component {
-        render() {
-            return <div className="header">
-                <img className="headerAvatar" src={this.props.header.avatar}/>
-                <p className="headerDate">{this.props.header.date}</p>
-            </div>
-        }
-    }
-    `, `
-    class Comment extends React.Component {
-        render() {
-            return <div className="comment">
-                <Header header={this.props.header}/>
-                <Content content={this.props.content}/>
-            </div>
-        }
-    }
-    `
-];
 
-const notes = [
-    "Content let you split the UI into independent, reusable pieces, and think about each piece in isolation.",
-    "Content are alike to JavaScript object' constructor except they are being called differently by React seeing an element \n" +
-    "representing a user-defined component and by passing its JSX attributes to this component as a single object.\n" +
-    "We call this object “props”. They accept arbitrary inputs by ultimately returning React elements describing what should appear on the screen.",
-
-    "Content can refer to other components in their output. This lets us use the same component abstraction for any level of detail. \n" +
-    "A button, a form, a dialog, a screen: in React apps, all those are commonly expressed as components. \n" +
-    "Don’t be afraid to split components into smaller components for better reusability.",
-
-    "All React components must act like pure functions with respect to their props, it must never modify its own props!"
-];
-
-let notesContainer = [];
-let snippetsContainer = [];
-
-class Note extends React.Component {
-    render() {
-        return <p className={noteClassName}>{this.props.note}</p>
-    }
-}
-
-class Snippet extends React.Component {
-    render() {
-        return <pre>{this.props.snippet}</pre>
-    }
-}
-
-class Content extends React.Component {
-    render() {
-        return <div className="content">
-            <h1 className="contentText">{this.props.content.text}</h1>
-        </div>
-    }
-}
-
-class Header extends React.Component {
-    render() {
-        return <div className="header">
-            <img className="headerAvatar" src={this.props.header.avatar}/>
-            <p className="headerDate">{this.props.header.date}</p>
-        </div>
-    }
-}
-
-class Comment extends React.Component {
+class Comment extends Component {
     render() {
         this.childrens = [];
 
@@ -210,53 +144,84 @@ class Comment extends React.Component {
         });
 
         return <div className="comment">
-                   <Header header={this.props.comment.comment.header}/>
-                   <Content content={this.props.comment.comment.content}/>
-                   <div className="child_comment">
-                       {this.childrens}
-                   </div>
+            <Header header={this.props.comment.comment.header}/>
+            <Content content={this.props.comment.comment.content}/>
+            <div className="child_comment">
+                {this.childrens}
+            </div>
         </div>;
     }
 }
 
-notes.forEach((note) => {
-    notesContainer.push(<Note note={note} />);
-});
+class CommentSystem extends Component {
+    constructor(props) {
+        super(props);
 
-snippets.forEach((snippet) => {
-    snippetsContainer.push(<Snippet snippet={snippet} />);
-});
+        this.state = {
+            commentSystem: null
+        }
+    }
 
-let label = <p className="label">
-    Comment System
-</p>;
+    componentDidMount() {
+        this.setState(() => {
+            let commentsSystem = [];
+            let commentsTree = queryTree();
+            commentsTree.forEach((comment) => {
+                commentsSystem.push(<Comment comment={comment}/>);
+            });
 
-let pre_processing = (<div className="pre_processing sub_container">
-    <div className="sub_container_content">
-        {notesContainer}
-        <div className="snippets">
-            {snippetsContainer}
+            return {
+                commentSystem : commentsSystem
+            }
+        });
+    }
+
+    render = () => (
+        <div className="commentSystem">
+            {this.state.commentSystem}
         </div>
-    </div>
-</div>);
+    );
+}
 
-let commentsSystem = [];
-let commentsTree = queryTree();
-commentsTree.forEach((comment) => {
-    commentsSystem.push(<Comment comment={comment}/>);
-});
+const NotesContainer = {
+    "header" : {
+        "title" : "Components & Props"
+    },
+    "content" : {
+        "notes": [{
+            id: 1,
+            type: NOTE,
+            value: "Content let you split the UI into independent, reusable pieces, and think" +
+            " about each piece in isolation."
+        }, {
+            id: 2,
+            type: NOTE,
+            value: "Content are alike to JavaScript object' constructor except they are being" +
+            " called differently by React seeing an element representing a user-defined" +
+            " component  and by passing its JSX attributes to this component as a single object." +
+            " We call this object “props”. They accept arbitrary inputs by ultimately returning" +
+            " React elements describing what should appear on the screen."
+        }, {
+            id: 3,
+            type: NOTE,
+            value: "Content can refer to other components in their output. This lets us use the" +
+            " same component abstraction for any level of detail. A button, a form, a dialog, a" +
+            " screen: in React apps, all those are commonly expressed as components. Don’t be" +
+            " afraid to split components into smaller components for better reusability."
+        }, {
+            id: 4,
+            type: NOTE,
+            value: "All React components must act like pure functions with respect to their" +
+            " props, it must never modify its own props!"
+        }, {
+            id: 5,
+            type: SNIPPET,
+            value: {
+                snippet : "",
+                demo : <CommentSystem/>
+            }
+        }]
+    }
+};
 
-let post_processing = (<div className="post_processing sub_container">
-    {label}
-    <div className="commentSystem">
-        {commentsSystem}
-    </div>
-</div>);
-
-ReactDOM.render(
-    <div className="container">
-        {pre_processing}
-        {post_processing}
-    </div>,
-    document.getElementById("root")
-);
+export default NotesContainer;

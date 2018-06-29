@@ -1,27 +1,10 @@
-const noteClassName = "introduction";
+import React from "react"
+import objToStr from "./../../tools/objToStr"
 
-const snippets = [];
-const notes = [
-    "Conditional rendering in React works through the use of JavaScript operators like if or the conditional operator to create elements representing the current state, and let React update the UI to match them." + "\n",
-    "You can use variables to store elements. This can help you conditionally render a part of the component while the rest of the output remains intact." + "\n",
-    "You may embed any expressions in JSX by wrapping them in curly braces. This includes the JavaScript logical && operator. It can be handy for conditionally including an element by using ternary operator or even {condition && react element} and " +
-    "it works well because in JavaScript, true && expression always evaluates to expression, thus React will render it, and false && expression always evaluates to false which React will ignore and skip it." + "\n"
-];
+import "./style.sass"
 
-let notesContainer = [];
-let snippetsContainer = [];
-
-notes.forEach((note) => {
-    notesContainer.push(<p className={noteClassName}>{note}</p>);
-});
-
-snippets.forEach((snippet) => {
-    snippetsContainer.push(<pre>{snippet}</pre>);
-});
-
-let label = <p className="label">
-    Conditional in React
-</p>;
+const NOTE = "NOTE";
+const SNIPPET = "SNIPPET";
 
 class Button extends React.Component {
     constructor(props) {
@@ -38,7 +21,6 @@ class Button extends React.Component {
 class LoggingSystem extends React.Component {
     constructor(props) {
         super(props);
-        this.text = props.text;
         this.state = {"auth" : "login"};
     }
 
@@ -62,24 +44,40 @@ class LoggingSystem extends React.Component {
     }
 }
 
-let pre_processing = <div className="pre_processing sub_container">
-    <div className="sub_container_content">
-        {notesContainer}
-        <div className="snippets">
-            {snippetsContainer}
-        </div>
-    </div>
-</div>;
+const NotesContainer = {
+    "header" : {
+        "title" : "Conditional Rendering"
+    },
+    "content" : {
+        "notes": [{
+            id: 1,
+            type: NOTE,
+            value: "Conditional rendering in React works through the use of JavaScript operators" +
+            "  like if or the conditional operator to create elements representing the current" +
+            "  state, and let React update the UI to match them."
+        }, {
+            id: 2,
+            type: NOTE,
+            value: "You can use variables to store elements. This can help you conditionally" +
+            " render  a part of the component while the rest of the output remains intact."
+        }, {
+            id: 3,
+            type: NOTE,
+            value: "You may embed any expressions in JSX by wrapping them in curly braces.  This" +
+            " includes the JavaScript logical && operator. It can be handy for conditionally" +
+            " including an element by using ternary operator or even {condition && react" +
+            " element}  and it works well because in JavaScript, true && expression always" +
+            " evaluates to expression,  thus React will render it, and false && expression" +
+            " always evaluates to  false which React will ignore and skip it."
+        }, {
+            id: 4,
+            type: SNIPPET,
+            value: {
+                snippet : "",
+                demo : <LoggingSystem/>
+            }
+        }]
+    }
+};
 
-let post_processing = <div className="post_processing sub_container">
-    {label}
-    <LoggingSystem/>
-</div>;
-
-ReactDOM.render(
-    <div className="container">
-        {pre_processing}
-        {post_processing}
-    </div>,
-    document.getElementById("root")
-);
+export default NotesContainer;
