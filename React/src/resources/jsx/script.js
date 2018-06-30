@@ -1,44 +1,8 @@
-const noteClassName = "introduction";
+import React from "react"
+import "./style.sass"
 
-const snippets = [
-    `
-let reactElement = React.createElement(
-    "button",
-    {
-        style: {
-            backgroundColor: "red"
-        },
-        className: "button"
-    },
-    'Click Me'
-);
-`, `
-ReactDOM.render(
-    <div className="container">
-        {pre_processing}
-        {post_processing}
-    </div>,
-    document.getElementById("root")
-);
-`
-];
-
-const notes = [
-    "JSX is a preprocessor step that adds XML syntax to JavaScript. You can definitely use React without JSX but JSX makes React a lot more elegant.",
-    "Just like XML, JSX tags have a tag name, attributes, and children.\n" +
-    "If an attribute value is enclosed in quotes, the value is a string. Otherwise, wrap the value in braces and the value is the enclosed JavaScript expression."
-];
-
-let notesContainer = [];
-let snippetsContainer = [];
-
-notes.forEach((note) => {
-    notesContainer.push(<p className={noteClassName}>{note}</p>);
-});
-
-snippets.forEach((snippet) => {
-    snippetsContainer.push(<pre>{snippet}</pre>);
-});
+const NOTE = "NOTE";
+const SNIPPET = "SNIPPET";
 
 let label = <p className="label">
     React Element
@@ -55,24 +19,41 @@ let reactElement = React.createElement(
     'Click Me'
 );
 
-let pre_processing = <div className="pre_processing sub_container">
-    <div className="sub_container_content">
-        {notesContainer}
-        <div className="snippets">
-            {snippetsContainer}
+class JSXElements extends React.Component {
+    render = () => (
+        <div>
+            {label}
+            {reactElement}
         </div>
-    </div>
-</div>;
+    );
+}
 
-let post_processing = <div className="post_processing sub_container">
-    {label}
-    {reactElement}
-</div>;
+const NotesContainer = {
+    "header" : {
+        "title" : "Forms"
+    },
+    "content" : {
+        "notes": [{
+            id: 1,
+            type: NOTE,
+            value: "JSX is a preprocessor step that adds XML syntax to JavaScript. You can" +
+            " definitely use React without JSX but JSX makes React a lot more elegant."
+        }, {
+            id: 2,
+            type: NOTE,
+            value: "Just like XML, JSX tags have a tag name, attributes, and children. If an" +
+            " attribute value is enclosed in quotes, the value is a string. Otherwise, wrap the" +
+            " value in braces and the value is the enclosed JavaScript expression."
 
-ReactDOM.render(
-    <div className="container">
-        {pre_processing}
-        {post_processing}
-    </div>,
-    document.getElementById("root")
-);
+        }, {
+            id: 3,
+            type: SNIPPET,
+            value: {
+                snippet : null,
+                demo : <JSXElements/>
+            }
+        }]
+    }
+};
+
+export default NotesContainer;

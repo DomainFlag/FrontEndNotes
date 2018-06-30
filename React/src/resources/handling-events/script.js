@@ -1,39 +1,22 @@
-const noteClassName = "introduction";
+import React from "react"
+import {Component} from "react"
+import "./style.sass"
 
-const snippets = [];
-const notes = [
-    "Handling events with React elements especially with JSX you pass a function as the event handler, rather than a string.",
-    "By defining a component by ES6 class usage, event handler may be a class' method defined as an arrow function, no more context binding headache.",
-    "Passing arguments to Event Handlers can be done by calling inner method or by binding by attaching a context with desired arguments to newly created function."
-];
+const NOTE = "NOTE";
+const SNIPPET = "SNIPPET";
 
-let notesContainer = [];
-let snippetsContainer = [];
-
-notes.forEach((note) => {
-    notesContainer.push(<p className={noteClassName}>{note}</p>);
-});
-
-snippets.forEach((snippet) => {
-    snippetsContainer.push(<pre>{snippet}</pre>);
-});
-
-let label = <p className="label">
-    Event Handling with React
-</p>;
-
-class Label extends React.Component {
+class Label extends Component {
     constructor(props) {
         super(props);
         this.text = props.text;
     }
 
-    render() {
-        return <p className="sublabel">{this.text}</p>
-    }
+    render = () => (
+        <p className="label">{this.text}</p>
+    )
 }
 
-class Button extends React.Component {
+class Button extends Component {
     constructor(props) {
         // Calling the super Constructor
         super(props);
@@ -44,16 +27,18 @@ class Button extends React.Component {
         alert("Yeah!");
     };
 
-    render() {
-        return <button className="button" onClick={this.handleClick}>
-            Click me!
-        </button>
-    }
+    render = () => (
+        <div className="event">
+            <button className="button" onClick={this.handleClick}>
+                Click me!
+            </button>
+        </div>
+    )
 }
 
-class ColorPicker extends React.Component {
+class ColorPicker extends Component {
     constructor(props) {
-        // Calling the super Constructor
+        // Calling the super Constructor - Component
         super(props);
 
         this.width = props.width;
@@ -88,39 +73,59 @@ class ColorPicker extends React.Component {
         this.setState({color: `rgb(${imageData.data[0]}, ${imageData.data[1]}, ${imageData.data[2]})`});
     }
 
-    render() {
-        return <div>
+    render = () => (
+        <div className="event">
             <p>{this.state.color}</p>
-            <canvas id="palette" onMouseMove={this.detectColorRegion.bind(this)}></canvas>
+            <canvas id="palette" onMouseMove={this.detectColorRegion.bind(this)}/>
         </div>
-    }
+    )
 }
 
-let components = [
-    <Label text="Click Event"/>,
-    <Button />,
-    <Label text="On mouse over"/>,
-    <ColorPicker width="300" height="125" rate="10"/>
-];
-
-let pre_processing = <div className="pre_processing sub_container">
-    <div className="sub_container_content">
-        {notesContainer}
-        <div className="snippets">
-            {snippetsContainer}
+class EventParade extends Component {
+    render = () => (
+        <div className="events">
+            <div className="event-container">
+                <Label text="Click Event"/>
+                <Button />
+            </div>
+            <div className="event-container">
+                <Label text="OnMouseMove Event"/>
+                <ColorPicker width="150" height="30" rate="10"/>
+            </div>
         </div>
-    </div>
-</div>;
+    );
+}
 
-let post_processing = <div className="post_processing sub_container">
-    {label}
-    {components}
-</div>;
+const NotesContainer = {
+    "header" : {
+        "title" : "Forms"
+    },
+    "content" : {
+        "notes": [{
+            id: 1,
+            type: NOTE,
+            value: "Handling events with React elements especially with JSX you pass a function" +
+            " as the event handler, rather than a string."
+        }, {
+            id: 2,
+            type: NOTE,
+            value: "By defining a component by ES6 class usage, event handler may be a class'" +
+            " method defined as an arrow function, no more context binding headache."
 
-ReactDOM.render(
-    <div className="container">
-        {pre_processing}
-        {post_processing}
-    </div>,
-    document.getElementById("root")
-);
+        }, {
+            id: 3,
+            type: NOTE,
+            value: "Passing arguments to Event Handlers can be done by calling inner method or" +
+            " by binding by attaching a context with desired arguments to newly created function."
+        }, {
+            id: 4,
+            type: SNIPPET,
+            value: {
+                snippet : null,
+                demo : <EventParade/>
+            }
+        }]
+    }
+};
+
+export default NotesContainer;

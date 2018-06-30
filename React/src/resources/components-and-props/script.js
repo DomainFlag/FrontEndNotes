@@ -1,4 +1,10 @@
 import React from "react"
+import {Component} from "react"
+
+import "./style.sass"
+
+const NOTE = "NOTE";
+const SNIPPET = "SNIPPET";
 
 let comments = [
     {
@@ -114,7 +120,7 @@ class Stack {
     };
 }
 
-let queryTree = () => {
+let queryTree = (comments) => {
     let stack = new Stack(comments);
 
     while(stack.stack.child.length !== 0) {
@@ -134,51 +140,52 @@ let queryTree = () => {
     return stack.getTree();
 };
 
+class CommentHeader extends React.Component {
+    render = () => (
+        <div className="comment-header">
+            <img className="comment-header-avatar" src={this.props.header.avatar}/>
+            <p className="comment-header-date">{this.props.header.date}</p>
+        </div>
+    )
+}
+
+class CommentContent extends React.Component {
+    render = () => (
+        <div className="comment-content">
+            <h1 className="comment-content-text">{this.props.content.text}</h1>
+        </div>
+    )
+}
 
 class Comment extends Component {
-    render() {
-        this.childrens = [];
-
-        this.props.comment.children.forEach((child) => {
-            this.childrens.push((<Comment comment={child}/>));
-        });
-
-        return <div className="comment">
-            <Header header={this.props.comment.comment.header}/>
-            <Content content={this.props.comment.comment.content}/>
-            <div className="child_comment">
-                {this.childrens}
+    render = () => (
+        <div className="comment">
+            <CommentHeader header={this.props.comment.comment.header}/>
+            <CommentContent content={this.props.comment.comment.content}/>
+            <div className="comment-child">
+                {
+                    this.props.comment.children.map((child) => (
+                        <Comment comment={child}/>
+                    ))
+                }
             </div>
-        </div>;
-    }
+        </div>
+    )
 }
+
+const commentSystem = queryTree(comments)
+    .map((comment) => (
+        <Comment comment={comment}/>
+    ));
 
 class CommentSystem extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            commentSystem: null
-        }
-    }
-
-    componentDidMount() {
-        this.setState(() => {
-            let commentsSystem = [];
-            let commentsTree = queryTree();
-            commentsTree.forEach((comment) => {
-                commentsSystem.push(<Comment comment={comment}/>);
-            });
-
-            return {
-                commentSystem : commentsSystem
-            }
-        });
     }
 
     render = () => (
-        <div className="commentSystem">
-            {this.state.commentSystem}
+        <div className="comment-system">
+            {this.props.commentSystem}
         </div>
     );
 }
@@ -217,8 +224,8 @@ const NotesContainer = {
             id: 5,
             type: SNIPPET,
             value: {
-                snippet : "",
-                demo : <CommentSystem/>
+                snippet : null,
+                demo : <CommentSystem commentSystem={commentSystem}/>
             }
         }]
     }
